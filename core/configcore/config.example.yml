@@ -1,0 +1,40 @@
+redis:
+  host: "redis"
+  port: 6379
+  user: "************"
+  password: "************"
+database: # данные для подключения к postgresql
+  host: "database_host"
+  port: 5432
+  db: "demo_db"
+  user: "************"
+  password: "************"
+  ssl: "disable"
+rabbitmq:
+  user: "************"
+  password: "************"
+  host: "rabbitmq"
+  port: 5672
+smtp_mail_server:
+  base_mail: "******@****.***"
+  base_title: "***********"
+  smtp_password: "*************"
+  smtp_host: "smtp.*********.**"
+  smtp_port: "587" # 465 for SSL or 587 for localhost
+secrets: # секреты управления и шифрования
+  admin_secret: "************"
+  user_secret: "************"
+grps_clients: # клиенты доступа для grps(для межсервисного подключения)
+  auth_service:
+    host: "demo_auth_service_c"
+    port: 4551
+exposed_service_config:
+  user_service:
+    port_rest: 1725
+    cors:
+      allowed_origins:
+    swagger:
+      user: "************"
+      pass: "************"
+  auth_service:
+    grpc_port: 4551

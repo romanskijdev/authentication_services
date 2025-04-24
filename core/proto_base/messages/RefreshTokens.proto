@@ -1,0 +1,15 @@
+syntax = "proto3";
+package msg;
+option go_package = "./proto;protoobj";
+
+message RefreshTokensRequest {
+  string refresh_token = 1;
+  string client_ip = 2;
+  string access_token = 3;
+}
+
+message RefreshTokensResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  bool ip_changed = 3;
+}
