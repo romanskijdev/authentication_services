@@ -1,0 +1,11 @@
+syntax = "proto3";
+option go_package = "./proto;protoobj";
+package msg;
+
+import "messages/IssueTokens.proto";
+import "messages/RefreshTokens.proto";
+
+service AuthService {
+  rpc IssueTokens(IssueTokensRequest) returns (IssueTokensResponse);
+  rpc RefreshTokens(RefreshTokensRequest) returns (RefreshTokensResponse);
+}

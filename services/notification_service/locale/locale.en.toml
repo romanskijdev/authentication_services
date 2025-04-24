@@ -1,0 +1,21 @@
+# Для чеков
+
+# Успешная активация чека
+[title_activation_check]
+other="Activation check"
+
+[body_activation_check_success]
+other="Check for <<amount>> has been activated by user <<user_n>>"
+
+#  Неуспешный чек
+
+[body_activation_check_unsuccessful]
+other="The check for <<amount>> was not activated, the funds were returned to your account"
+
+# Чаты
+
+[title_new_message]
+other="New message"
+
+[body_new_message]
+other="New message received from <<user/support>>"

@@ -1,0 +1,13 @@
+syntax = "proto3";
+package msg;
+option go_package = "./proto;protoobj";
+
+message IssueTokensRequest {
+  string user_id = 1;
+  string client_ip = 2;
+}
+
+message IssueTokensResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}

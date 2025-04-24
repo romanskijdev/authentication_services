@@ -1,0 +1,6 @@
+.env
+auth_service_app
+config.yml
+vendor
+app
+.DS_Store

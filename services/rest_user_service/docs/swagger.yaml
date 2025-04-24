@@ -1,0 +1,161 @@
+definitions:
+  handler.ErrorResponse:
+    properties:
+      error_code:
+        description: Код ошибки
+        type: integer
+      error_description:
+        description: Описание ошибки
+        type: string
+    type: object
+  typescore.TokenPair:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  typescore.User:
+    properties:
+      created_at:
+        description: Дата и время создания записи
+        type: string
+      email:
+        description: Адрес электронной почты пользователя
+        type: string
+      first_name:
+        description: Имя пользователя
+        type: string
+      is_blocked:
+        description: Залочен ли пользователь(заблокирован или нет)
+        type: boolean
+      last_name:
+        description: Фамилия пользователя
+        type: string
+      nickname:
+        description: Псевдоним или никнейм пользователя
+        type: string
+      notification_enabled:
+        description: Включены ли разрешения на push-уведомления
+        type: boolean
+      role:
+        allOf:
+        - $ref: '#/definitions/typescore.UserRoleTypes'
+        description: Роль пользователя
+      serial_id:
+        description: Уникальный порядковый идентификатор записи
+        type: integer
+      system_id:
+        description: Системный идентификатор записи
+        type: string
+      telegram_id:
+        description: Идентификатор пользователя в Telegram
+        type: integer
+    type: object
+  typescore.UserRoleTypes:
+    enum:
+    - user
+    - admin
+    - super_admin
+    - support
+    type: string
+    x-enum-comments:
+      AdminRole: администратор
+      SuperAdminRole: супер администратор
+      SupportRole: поддержка
+      UserRole: пользователь
+    x-enum-varnames:
+    - UserRole
+    - AdminRole
+    - SuperAdminRole
+    - SupportRole
+info:
+  contact: {}
+paths:
+  /api/auth/issue:
+    post:
+      consumes:
+      - application/json
+      description: Выдает Access и Refresh токены для пользователя с указанным GUID
+      parameters:
+      - description: GUID пользователя
+        in: query
+        name: guid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успех
+          schema:
+            $ref: '#/definitions/typescore.TokenPair'
+        "400":
+          description: Некорректный запрос
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Ошибка сервера
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Выдача пары токенов
+      tags:
+      - auth
+  /api/auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Обновляет Access и Refresh токены на основе действующего Refresh
+        токена
+      parameters:
+      - description: Bearer <refresh_token>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успех
+          schema:
+            $ref: '#/definitions/typescore.TokenPair'
+        "400":
+          description: Некорректный запрос
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "401":
+          description: Невалидный или просроченный токен
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Ошибка сервера
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Обновление токенов
+      tags:
+      - auth
+  /api/users/profile:
+    get:
+      consumes:
+      - application/json
+      description: Получение профиля пользователя
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успех
+          schema:
+            $ref: '#/definitions/typescore.User'
+        "400":
+          description: Некорректный запрос
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Ошибка сервера
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Получение профиля пользователя
+      tags:
+      - profile
+swagger: "2.0"

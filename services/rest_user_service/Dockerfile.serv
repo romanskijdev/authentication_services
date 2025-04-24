@@ -1,0 +1,13 @@
+# Создаём конечный образ на основе Ubuntu
+FROM kartashs/ubuntu:22.04
+
+WORKDIR /app
+
+# Определяем аргумент сборки
+ARG APP_NAME
+
+# Копируем готовый билд из системы
+COPY ./${APP_NAME} /app/${APP_NAME}
+
+# Запуск приложения
+CMD ["sh", "-c", "/app/${APP_NAME}"]
